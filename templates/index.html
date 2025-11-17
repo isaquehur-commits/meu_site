@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inventário de Componentes - Sistema de Gestão de Obsolescência</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+            color: #1f2937;
+        }
+        
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 16px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.2);
+            overflow: hidden;
+        }
+        
+        header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 32px;
+        }
+        
+        .header-content {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+        
+        .icon {
+            width: 48px;
+            height: 48px;
+            background: rgba(255,255,255,0.2);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+        }
+        
+        h1 {
+            font-size: 28px;
+            font-weight: 700;
+            margin-bottom: 4px;
+        }
+        
+        .subtitle {
+            font-size: 14px;
+            opacity: 0.9;
+        }
+        
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            padding: 32px;
+            background: #f9fafb;
+            border-bottom: 1px solid #e5e7eb;
+        }
+        
+        .stat-card {
+            background: white;
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        }
+        
+        .stat-value {
+            font-size: 32px;
+            font-weight: 700;
+            margin-bottom: 4px;
+        }
+        
+        .stat-label {
+            font-size: 14px;
+            color: #6b7280;
+        }
+        
+        .filters {
+            padding: 32px;
+            background: white;
+            border-bottom: 1px solid #e5e7eb;
+        }
+        
+        .filter-group {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 16px;
+            margin-bottom: 16px;
+        }
+        
+        input, select {
+            width: 100%;
+            padding: 12px 16px;
+            border: 1px solid #d1d5db;
+            border-radius: 8px;
+            font-size: 14px;
+            transition: all 0.2s;
+        }
+        
+        input:focus, select:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+        
+        .components {
+            padding: 32px;
+        }
+        
+        .components-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 24px;
+        }
+        
+        .components-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 20px;
+        }
+        
+        .component-card {
+            background: white;
+            border: 1px solid #e5e7eb;
+            border-radius: 12px;
+            padding: 20px;
+            transition: all 0.2s;
+        }
+        
+        .component-card:hover {
+            box-shadow: 0 8px 24px rgba(0,0,0,0.1);
+            transform: translateY(-2px);
+        }
+        
+        .component-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: start;
+            margin-bottom: 16px;
+        }
+        
+        .component-title {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+        
+        .status-badge {
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+            color: white;
+        }
+        
+        .component-info {
+            display: grid;
+            gap: 12px;
+            margin-top: 16px;
+            padding-top: 16px;
+            border-top: 1px solid #f3f4f6;
+        }
+        
+        .info-row {
+            display: flex;
+            justify-content: space-between;
+            font-size: 14px;
+        }
+        
+        .info-label {
+            color: #6b7280;
+            font-weight: 500;
+        }
+        
+        .info-value {
+            color: #1f2937;
+            font-weight: 600;
+        }
+        
+        .standards {
+            display: flex;
+            gap: 8px;
+            margin-top: 12px;
+        }
+        
+        .standard-badge {
+            padding: 4px 10px;
+            background: #f3f4f6;
+            border-radius: 6px;
+            font-size: 11px;
+            font-weight: 600;
+            color: #4b5563;
+        }
+        
+        .standard-badge.active {
+            background: #10b981;
+            color: white;
+        }
+        
+        .notes {
+            margin-top: 12px;
+            padding: 12px;
+            background: #fef3c7;
+            border-left: 3px solid #f59e0b;
+            border-radius: 6px;
+            font-size: 13px;
+            color: #92400e;
+        }
+        
+        .no-results {
+            text-align: center;
+            padding: 60px 20px;
+            color: #6b7280;
+        }
+        
+        @media print {
+            body {
+                background: white;
+                padding: 0;
+            }
+            
+            .container {
+                box-shadow: none;
+            }
+            
+            .filters {
+                display: none;
+            }
+            
+            .component-card {
+                break-inside: avoid;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="header-content">
+                <div class="icon">⚙️</div>
+                <div>
+                    <h1>Inventário de Componentes</h1>
+                    <p class="subtitle">Sistema de Gestão e Identificação de Obsolescência</p>
+                </div>
+            </div>
+        </header>
+        
+        <div class="stats">
+            <div class="stat-card">
+                <div class="stat-value">15</div>
+                <div class="stat-label">Total de Componentes</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value" style="color: #10b981">7</div>
+                <div class="stat-label">Conformes</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value" style="color: #f59e0b">4</div>
+                <div class="stat-label">Atenção</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value" style="color: #ef4444">4</div>
+                <div class="stat-label">Obsoletos</div>
+            </div>
+        </div>
+        
+        <div class="filters">
+            <div class="filter-group">
+                <input type="text" id="searchInput" placeholder="Buscar por nome, fabricante ou modelo...">
+                <select id="categoryFilter">
+                    <option value="all">Todas as Categorias</option>
+                    <option value="mechanical">Mecânico</option>
+                    <option value="electrical">Elétrico</option>
+                    <option value="electronic">Eletrônico</option>
+                </select>
+                <select id="statusFilter">
+                    <option value="all">Todos os Status</option>
+                    <option value="compliant">Conforme</option>
+                    <option value="attention">Atenção</option>
+                    <option value="obsolete">Obsoleto</option>
+                </select>
+            </div>
+        </div>
+        
+        <div class="components">
+            <div class="components-header">
+                <h2>Componentes <span id="componentCount">(15)</span></h2>
+            </div>
+            <div class="components-grid" id="componentsGrid"></div>
+            <div id="noResults" class="no-results" style="display: none;">
+                Nenhum componente encontrado com os filtros aplicados.
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        const components = [{"id":"1","name":"Motor de Tração","category":"mechanical","manufacturer":"Atlas Schindler","model":"VF120-2018","installationDate":"2018-03-15","obsolescenceStatus":"compliant","standards":{"abnt":true,"en":true,"iso":true},"compatibility":"modern","discontinued":false},{"id":"2","name":"Cabos de Suspensão","category":"mechanical","manufacturer":"Brugg Lifting","model":"8x19S-FC","installationDate":"2012-06-20","obsolescenceStatus":"attention","standards":{"abnt":true,"en":true,"iso":false},"compatibility":"limited","discontinued":false,"notes":"Necessita verificação de conformidade ISO 4344"},{"id":"3","name":"Limitador de Velocidade","category":"mechanical","manufacturer":"Wittur","model":"SL-200","installationDate":"2008-01-10","obsolescenceStatus":"obsolete","standards":{"abnt":false,"en":true,"iso":false},"compatibility":"incompatible","discontinued":true,"notes":"Descontinuado em 2015. Não conforme com ABNT NBR NM 207:2019"},{"id":"4","name":"Freio Eletromagnético","category":"mechanical","manufacturer":"Mayr","model":"ROBA-stop M","installationDate":"2019-11-05","obsolescenceStatus":"compliant","standards":{"abnt":true,"en":true,"iso":true},"compatibility":"modern","discontinued":false},{"id":"5","name":"Portas de Cabina","category":"mechanical","manufacturer":"Fermator","model":"VVF-2000","installationDate":"2010-08-12","obsolescenceStatus":"attention","standards":{"abnt":true,"en":false,"iso":true},"compatibility":"limited","discontinued":false,"notes":"Modelo anterior à EN 81-20. Requer adaptação"},{"id":"6","name":"Inversor de Frequência","category":"electrical","manufacturer":"Yaskawa","model":"V1000","installationDate":"2020-02-18","obsolescenceStatus":"compliant","standards":{"abnt":true,"en":true,"iso":true},"compatibility":"modern","discontinued":false},{"id":"7","name":"Quadro de Comando","category":"electrical","manufacturer":"Ziehl-Abegg","model":"MCS-2010","installationDate":"2010-05-22","obsolescenceStatus":"obsolete","standards":{"abnt":false,"en":false,"iso":false},"compatibility":"incompatible","discontinued":true,"notes":"Descontinuado em 2016. Sistema não compatível com protocolos modernos"},{"id":"8","name":"Botoeiras de Andar","category":"electrical","manufacturer":"Schmersal","model":"BP-Series","installationDate":"2015-09-30","obsolescenceStatus":"attention","standards":{"abnt":true,"en":true,"iso":false},"compatibility":"limited","discontinued":false,"notes":"Sem certificação ISO 14798. Funcional mas necessita upgrade"},{"id":"9","name":"Iluminação de Cabina LED","category":"electrical","manufacturer":"Osram","model":"DALI-LED-3000","installationDate":"2021-03-08","obsolescenceStatus":"compliant","standards":{"abnt":true,"en":true,"iso":true},"compatibility":"modern","discontinued":false},{"id":"10","name":"Contator Principal","category":"electrical","manufacturer":"Siemens","model":"3RT2023-1A","installationDate":"2007-12-05","obsolescenceStatus":"obsolete","standards":{"abnt":false,"en":true,"iso":false},"compatibility":"incompatible","discontinued":true,"notes":"Substituído por série 3RT2. Fora das normas ABNT atuais"},{"id":"11","name":"Controlador Lógico","category":"electronic","manufacturer":"Schneider Electric","model":"Modicon M221","installationDate":"2019-07-14","obsolescenceStatus":"compliant","standards":{"abnt":true,"en":true,"iso":true},"compatibility":"modern","discontinued":false},{"id":"12","name":"Sistema de Comunicação CAN","category":"electronic","manufacturer":"KONE","model":"EcoDisc-CAN","installationDate":"2011-04-25","obsolescenceStatus":"attention","standards":{"abnt":true,"en":false,"iso":true},"compatibility":"limited","discontinued":false,"notes":"Protocolo legado. Compatível mas limitado com IoT moderno"},{"id":"13","name":"Sensores de Posição","category":"electronic","manufacturer":"Sick","model":"LS-200","installationDate":"2009-11-18","obsolescenceStatus":"obsolete","standards":{"abnt":false,"en":false,"iso":false},"compatibility":"incompatible","discontinued":true,"notes":"Tecnologia magnética obsoleta. Substituído por sensores ópticos"},{"id":"14","name":"Display LCD Cabina","category":"electronic","manufacturer":"Mitsubishi","model":"GOT-Simple","installationDate":"2022-01-20","obsolescenceStatus":"compliant","standards":{"abnt":true,"en":true,"iso":true},"compatibility":"modern","discontinued":false},{"id":"15","name":"Encoder Absoluto","category":"electronic","manufacturer":"Heidenhain","model":"ECN-1313","installationDate":"2018-06-11","obsolescenceStatus":"compliant","standards":{"abnt":true,"en":true,"iso":true},"compatibility":"modern","discontinued":false}];
+        const statusColors = {"compliant":"#10b981","attention":"#f59e0b","obsolete":"#ef4444"};
+        const statusLabels = {"compliant":"Conforme","attention":"Atenção","obsolete":"Obsoleto"};
+        const categoryLabels = {"mechanical":"Mecânico","electrical":"Elétrico","electronic":"Eletrônico"};
+        const compatibilityLabels = {"modern":"Moderna","limited":"Limitada","incompatible":"Incompatível"};
+        
+        function renderComponents(filteredComponents) {
+            const grid = document.getElementById('componentsGrid');
+            const noResults = document.getElementById('noResults');
+            const count = document.getElementById('componentCount');
+            
+            count.textContent = '(' + filteredComponents.length + ')';
+            
+            if (filteredComponents.length === 0) {
+                grid.style.display = 'none';
+                noResults.style.display = 'block';
+                return;
+            }
+            
+            grid.style.display = 'grid';
+            noResults.style.display = 'none';
+            
+            grid.innerHTML = filteredComponents.map(comp => `
+                <div class="component-card">
+                    <div class="component-header">
+                        <div>
+                            <div class="component-title">${comp.name}</div>
+                            <div style="font-size: 13px; color: #6b7280;">${categoryLabels[comp.category]}</div>
+                        </div>
+                        <div class="status-badge" style="background: ${statusColors[comp.obsolescenceStatus]}">
+                            ${statusLabels[comp.obsolescenceStatus]}
+                        </div>
+                    </div>
+                    
+                    <div class="component-info">
+                        <div class="info-row">
+                            <span class="info-label">Fabricante</span>
+                            <span class="info-value">${comp.manufacturer}</span>
+                        </div>
+                        <div class="info-row">
+                            <span class="info-label">Modelo</span>
+                            <span class="info-value">${comp.model}</span>
+                        </div>
+                        <div class="info-row">
+                            <span class="info-label">Instalação</span>
+                            <span class="info-value">${new Date(comp.installationDate).toLocaleDateString('pt-BR')}</span>
+                        </div>
+                        <div class="info-row">
+                            <span class="info-label">Compatibilidade</span>
+                            <span class="info-value">${compatibilityLabels[comp.compatibility]}</span>
+                        </div>
+                        <div class="info-row">
+                            <span class="info-label">Descontinuado</span>
+                            <span class="info-value">${comp.discontinued ? 'Sim' : 'Não'}</span>
+                        </div>
+                    </div>
+                    
+                    <div class="standards">
+                        <div class="standard-badge ${comp.standards.abnt ? 'active' : ''}">ABNT</div>
+                        <div class="standard-badge ${comp.standards.en ? 'active' : ''}">EN</div>
+                        <div class="standard-badge ${comp.standards.iso ? 'active' : ''}">ISO</div>
+                    </div>
+                    
+                    ${comp.notes ? `<div class="notes">${comp.notes}</div>` : ''}
+                </div>
+            `).join('');
+        }
+        
+        function filterComponents() {
+            const search = document.getElementById('searchInput').value.toLowerCase();
+            const category = document.getElementById('categoryFilter').value;
+            const status = document.getElementById('statusFilter').value;
+            
+            const filtered = components.filter(comp => {
+                const matchesSearch = comp.name.toLowerCase().includes(search) ||
+                                    comp.manufacturer.toLowerCase().includes(search) ||
+                                    comp.model.toLowerCase().includes(search);
+                const matchesCategory = category === 'all' || comp.category === category;
+                const matchesStatus = status === 'all' || comp.obsolescenceStatus === status;
+                
+                return matchesSearch && matchesCategory && matchesStatus;
+            });
+            
+            renderComponents(filtered);
+        }
+        
+        document.getElementById('searchInput').addEventListener('input', filterComponents);
+        document.getElementById('categoryFilter').addEventListener('change', filterComponents);
+        document.getElementById('statusFilter').addEventListener('change', filterComponents);
+        
+        renderComponents(components);
+    </script>
+</body>
+</html>
