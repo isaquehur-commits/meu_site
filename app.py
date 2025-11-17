@@ -9,6 +9,3 @@ def index():
 @app.route('/sobre')
 def sobre():
     return render_template('sobre.html')
-
-if __name__ == '__main__':
-    app.run(debug=True, host='10.201.92.191', port=8080)
