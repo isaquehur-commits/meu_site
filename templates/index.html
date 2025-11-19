@@ -314,68 +314,90 @@
     </div>
     
     <script>
-        const components = [{"id":"1","name":"Motor de Tração","category":"mechanical","manufacturer":"Atlas Schindler","model":"VF120-2018","installationDate":"2018-03-15","obsolescenceStatus":"compliant","standards":{"abnt":true,"en":true,"iso":true},"compatibility":"modern","discontinued":false},{"id":"2","name":"Cabos de Suspensão","category":"mechanical","manufacturer":"Brugg Lifting","model":"8x19S-FC","installationDate":"2012-06-20","obsolescenceStatus":"attention","standards":{"abnt":true,"en":true,"iso":false},"compatibility":"limited","discontinued":false,"notes":""},{"id":"3","name":"Limitador de Velocidade","category":"mechanical","manufacturer":"Wittur","model":"SL-200","installationDate":"2008-01-10","obsolescenceStatus":"obsolete","standards":{"abnt":false,"en":true,"iso":false},"compatibility":"incompatible","discontinued":true,"notes":""},{"id":"4","name":"Freio Eletromagnético","category":"mechanical","manufacturer":"Mayr","model":"ROBA-stop M","installationDate":"2019-11-05","obsolescenceStatus":"compliant","standards":{"abnt":true,"en":true,"iso":true},"compatibility":"modern","discontinued":false},{"id":"5","name":"Portas de Cabina","category":"mechanical","manufacturer":"Fermator","model":"VVF-2000","installationDate":"2010-08-12","obsolescenceStatus":"attention","standards":{"abnt":true,"en":false,"iso":true},"compatibility":"limited","discontinued":false,"notes":""},{"id":"6","name":"Inversor de Frequência","category":"electrical","manufacturer":"Yaskawa","model":"V1000","installationDate":"2020-02-18","obsolescenceStatus":"compliant","standards":{"abnt":true,"en":true,"iso":true},"compatibility":"modern","discontinued":false},{"id":"7","name":"Quadro de Comando","category":"electrical","manufacturer":"Ziehl-Abegg","model":"MCS-2010","installationDate":"2010-05-22","obsolescenceStatus":"obsolete","standards":{"abnt":false,"en":false,"iso":false},"compatibility":"incompatible","discontinued":true,"notes":""},{"id":"8","name":"Botoeiras de Andar","category":"electrical","manufacturer":"Schmersal","model":"BP-Series","installationDate":"2015-09-30","obsolescenceStatus":"attention","standards":{"abnt":true,"en":true,"iso":false},"compatibility":"limited","discontinued":false,"notes":""},{"id":"9","name":"Iluminação de Cabina LED","category":"electrical","manufacturer":"Osram","model":"DALI-LED-3000","installationDate":"2021-03-08","obsolescenceStatus":"compliant","standards":{"abnt":true,"en":true,"iso":true},"compatibility":"modern","discontinued":false},{"id":"10","name":"Contator Principal","category":"electrical","manufacturer":"Siemens","model":"3RT2023-1A","installationDate":"2007-12-05","obsolescenceStatus":"obsolete","standards":{"abnt":false,"en":true,"iso":false},"compatibility":"incompatible","discontinued":true,"notes":""},{"id":"11","name":"Controlador Lógico","category":"electronic","manufacturer":"Schneider Electric","model":"Modicon M221","installationDate":"2019-07-14","obsolescenceStatus":"compliant","standards":{"abnt":true,"en":true,"iso":true},"compatibility":"modern","discontinued":false},{"id":"12","name":"Sistema de Comunicação CAN","category":"electronic","manufacturer":"KONE","model":"EcoDisc-CAN","installationDate":"2011-04-25","obsolescenceStatus":"attention","standards":{"abnt":true,"en":false,"iso":true},"compatibility":"limited","discontinued":false,"notes":""},{"id":"13","name":"Sensores de Posição","category":"electronic","manufacturer":"Sick","model":"LS-200","installationDate":"2009-11-18","obsolescenceStatus":"obsolete","standards":{"abnt":false,"en":false,"iso":false},"compatibility":"incompatible","discontinued":true,"notes":""},{"id":"14","name":"Display LCD Cabina","category":"electronic","manufacturer":"Mitsubishi","model":"GOT-Simple","installationDate":"2022-01-20","obsolescenceStatus":"compliant","standards":{"abnt":true,"en":true,"iso":true},"compatibility":"modern","discontinued":false},{"id":"15","name":"Encoder Absoluto","category":"electronic","manufacturer":"Heidenhain","model":"ECN-1313","installationDate":"2018-06-11","obsolescenceStatus":"compliant","standards":{"abnt":true,"en":true,"iso":true},"compatibility":"modern","discontinued":false}];
+        console.log("JSON recebido:", {{ components_json | safe }});
+        const components = {{ components_json | safe }};
         const statusColors = {"compliant":"#10b981","attention":"#f59e0b","obsolete":"#ef4444"};
         const statusLabels = {"compliant":"Conforme","attention":"Atenção","obsolete":"Obsoleto"};
         const categoryLabels = {"mechanical":"Mecânico","electrical":"Elétrico","electronic":"Eletrônico"};
         const compatibilityLabels = {"modern":"Moderna","limited":"Limitada","incompatible":"Incompatível"};
         
+        function createStatusLabel(status) {
+        const color = statusColors[status];
+        const text = statusLabels[status];
+
+        return `
+        <span style="
+            background:${color};
+            color:white;
+            padding:4px 8px;
+            border-radius:6px;
+            font-size:12px;
+            font-weight:bold;
+        ">
+            ${text}
+        </span>
+    `;
+}
+
         function renderComponents(filteredComponents) {
-            const grid = document.getElementById('componentsGrid');
-            const noResults = document.getElementById('noResults');
-            const count = document.getElementById('componentCount');
-            
-            count.textContent = '(' + filteredComponents.length + ')';
-            
-            if (filteredComponents.length === 0) {
-                grid.style.display = 'none';
-                noResults.style.display = 'block';
-                return;
-            }
-            
-            grid.style.display = 'grid';
-            noResults.style.display = 'none';
-            
-            grid.innerHTML = filteredComponents.map(comp => `
-                <div class="component-card">
-                    <div class="component-header">
-                        <div>
-                            <div class="component-title">${comp.name}</div>
-                            <div style="font-size: 13px; color: #6b7280;">${categoryLabels[comp.category]}</div>
-                        </div>
-                        <div class="status-badge" style="background: ${statusColors[comp.obsolescenceStatus]}">
-                            ${statusLabels[comp.obsolescenceStatus]}
-                        </div>
+    const grid = document.getElementById('componentsGrid');
+    const noResults = document.getElementById('noResults');
+    const count = document.getElementById('componentCount');
+    
+    count.textContent = '(' + filteredComponents.length + ')';
+    
+    if (filteredComponents.length === 0) {
+        grid.style.display = 'none';
+        noResults.style.display = 'block';
+        return;
+    }
+    
+    grid.style.display = 'grid';
+    noResults.style.display = 'none';
+    
+    grid.innerHTML = filteredComponents.map(comp => `
+        <div class="component-card">
+            <div class="component-header">
+                <div>
+                    <div class="component-title">${comp.name}</div>
+                    <div style="font-size: 13px; color: #6b7280;">
+                        ${categoryLabels[comp.category]}
                     </div>
-                    
-                    <div class="component-info">
-                        <div class="info-row">
-                            <span class="info-label">Fabricante</span>
-                            <span class="info-value">${comp.manufacturer}</span>
-                        </div>
-                        <div class="info-row">
-                            <span class="info-label">Modelo</span>
-                            <span class="info-value">${comp.model}</span>
-                        </div>
-                        <div class="info-row">
-                            <span class="info-label">Instalação</span>
-                            <span class="info-value">${new Date(comp.installationDate).toLocaleDateString('pt-BR')}</span>
-                        </div>
-                        
-                        <div class="info-row">
-                            <span class="info-label">Descontinuado</span>
-                            <span class="info-value">${comp.discontinued ? 'Sim' : 'Não'}</span>
-                        </div>
-                    </div>
-                    
-                    <div class="standards">
-                       
-                    </div>
-                    
-                    ${comp.notes ? `<div class="notes">${comp.notes}</div>` : ''}
                 </div>
-            `).join('');
-        }
+
+                <div class="status-badge">
+                    ${createStatusLabel(comp.obsolescenceStatus)}
+                </div>
+            </div>
+            
+            <div class="component-info">
+                <div class="info-row">
+                    <span class="info-label">Fabricante</span>
+                    <span class="info-value">${comp.manufacturer}</span>
+                </div>
+                <div class="info-row">
+                    <span class="info-label">Modelo</span>
+                    <span class="info-value">${comp.model}</span>
+                </div>
+                <div class="info-row">
+                    <span class="info-label">Instalação</span>
+                    <span class="info-value">
+                        ${new Date(comp.installationDate).toLocaleDateString('pt-BR')}
+                    </span>
+                </div>
+                
+                <div class="info-row">
+                    <span class="info-label">Descontinuado</span>
+                    <span class="info-value">${comp.discontinued ? 'Sim' : 'Não'}</span>
+                </div>
+            </div>
+
+            <div class="standards"></div>
+
+            ${comp.notes ? `<div class="notes">${comp.notes}</div>` : ''}
+        </div>
+    `).join('');
+}
         
         function filterComponents() {
             const search = document.getElementById('searchInput').value.toLowerCase();
@@ -403,9 +425,7 @@
     </script>
 
 
-<!-- Botão Sobre -->
-
-
+</script>
 
     </body>
     </html>
