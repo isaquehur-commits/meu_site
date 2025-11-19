@@ -512,26 +512,21 @@
             <div class="header-left">
                 <div class="logo-section">
                     <div class="logo-icon">
-                        <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M5 3v18l7-3 7 3V3l-7 3-7-3z" />
-                        </svg>
+                    <img src="{{ url_for('static', filename='images/logo.png') }}"
+                    alt="Logo da Empresa" style="width: 99px; height: 64px;">
                     </div>
+                    <div class="logo-text" style="margin-left: 16px;">
                     <div class="logo-text"> 
-                        <h1>ElevatorAI Manager</h1>
+                        <h1>Schindler ElevatorAI Manager</h1>
                         <p>Sistema Inteligente de Gestão de Elevadores</p>
                     </div>
                 </div>
                 <nav class="nav">
-                    <a href="#" class="active">Dashboard</a>
-                    <a href="#">Inventário</a>
+                    
+                   
                 </nav>
             </div>
-            <button class="settings-btn">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z" />
-                    <circle cx="12" cy="12" r="3" />
-                </svg>
-            </button>
+            
         </div>
     </header>
 
@@ -649,82 +644,151 @@
                     </div>
 
                     <div class="elevator-card">
-                        <div class="elevator-content">
-                            <div class="elevator-info">
-                                <div class="elevator-header">
-                                    <span class="elevator-id">ELV-042</span>
-                                    <span class="badge warning">Atenção</span>
-                                </div>
-                                <div class="elevator-building">
-                                    <h3>Shopping Center Beta</h3>
-                                    <p class="elevator-location">Bloco B - Setor 3</p>
-                                </div>
-                                <div class="elevator-details">
-                                    <div class="detail-row">
-                                        <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                                            <circle cx="12" cy="12" r="10" />
-                                            <polyline points="12 6 12 12 16 14" />
-                                        </svg>
-                                        <span>há 62 dias</span>
-                                    </div>
-                                    <div class="detail-row">
-                                        <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                                            <circle cx="12" cy="12" r="10" />
-                                            <line x1="12" y1="8" x2="12" y2="12" />
-                                            <line x1="12" y1="16" x2="12.01" y2="16" />
-                                        </svg>
-                                        <span>Modernização recomendada</span>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="elevator-score">
-                                <span class="score-value"></span>
-                                <p class="score-label">Score de Saúde</p>
-                                <div class="progress-bar">
-                                    <div class="progress-fill warning" style="width: 68%"></div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+    <div class="elevator-content" style="
+        display: flex; 
+        justify-content: space-between; 
+        align-items: flex-start; 
+        width: 100%;
+    ">
+        <div class="elevator-info" style="flex-grow: 1;">
+            <div class="elevator-header" style="
+                display: flex; 
+                align-items: center; 
+                margin-bottom: 10px;
+            ">
+                <span class="elevator-id">ELV-042</span>
+                <span class="badge warning" style="margin-left: 02px;">Atenção</span>
+            </div>
+            
+            <div class="elevator-building">
+                <h3>Shopping Center Beta</h3>
+                <p class="elevator-location">Bloco B - Setor 3</p>
+            </div>
+            
+            <div class="elevator-details">
+                <div class="detail-row">
+                    <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" style="width: 20px; height: 20px; vertical-align: middle;">
+                        <circle cx="12" cy="12" r="10" />
+                        <polyline points="12 6 12 12 16 14" />
+                    </svg>
+                    <span style="margin-left: 5px; vertical-align: middle;">há 62 dias</span>
+                </div>
+                
+                <div class="detail-row">
+                    <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" style="width: 20px; height: 20px; vertical-align: middle;">
+                        <circle cx="12" cy="12" r="10" />
+                        <line x1="12" y1="8" x2="12" y2="12" />
+                        <line x1="12" y1="16" x2="12.01" y2="16" />
+                    </svg>
+                    <span style="margin-left: 5px; vertical-align: middle;">Modernização recomendada</span>
+                </div>
+            </div>
+            </div>
 
-                    <div class="elevator-card">
-                        <div class="elevator-content">
-                            <div class="elevator-info">
-                                <div class="elevator-header">
-                                    <span class="elevator-id">ELV-128</span>
-                                    <span class="badge critical">Crítico</span>
-                                </div>
-                                <div class="elevator-building">
-                                    <h3>Hospital Gama</h3>
-                                    <p class="elevator-location">Ala Sul - Piso 5</p>
-                                </div>
-                                <div class="elevator-details">
-                                    <div class="detail-row">
-                                        <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                                            <circle cx="12" cy="12" r="10" />
-                                            <polyline points="12 6 12 12 16 14" />
-                                        </svg>
-                                        <span>há 120 dias</span>
-                                    </div>
-                                    <div class="detail-row">
-                                        <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                                            <circle cx="12" cy="12" r="10" />
-                                            <line x1="12" y1="8" x2="12" y2="12" />
-                                            <line x1="12" y1="16" x2="12.01" y2="16" />
-                                        </svg>
-                                        <span>Ação imediata requerida</span>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="elevator-score">
-                                <span class="score-value"></span>
-                                <p class="score-label">Score de Saúde</p>
-                                <div class="progress-bar">
-                                    <div class="progress-fill critical" style="width: 45%"></div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+        <div class="elevator-right-column" style="
+            display: flex; 
+            flex-direction: column; 
+            align-items: flex-end; 
+            padding-left: 20px;
+        ">
+            <div class="elevator-score" style="margin-bottom: 10px;">
+                <span class="score-value"></span>
+                <p class="score-label" style="text-align: right;">Score de Saúde</p>
+                <div class="progress-bar">
+                    <div class="progress-fill warning" style="width: 68%; height: 8px; border-radius: 4px; background-color: #ffc107;"></div>
+                </div>
+            </div>
+
+            <a href="#" class="action-btn" style="
+                background-color: #cf7f7f; 
+                color: #333333; 
+                padding: 8px 10px; 
+                border-radius: 5px; 
+                text-decoration: none;
+                font-weight: bold;
+                display: inline-block;
+                margin-top: 60px; /* Espaço entre o Score e o Botão */
+                font-size: 12px;
+            ">
+                GERAR NOTIFICAÇÃO
+            </a>
+        </div>        
+    </div>
+</div>
+                
+                   <div class="elevator-card">
+    <div class="elevator-content" style="
+        display: flex; 
+        justify-content: space-between; 
+        align-items: flex-start; 
+        width: 100%;
+    ">
+        <div class="elevator-info" style="flex-grow: 1;">
+            <div class="elevator-header" style="
+                display: flex; 
+                align-items: center; 
+                margin-bottom: 10px;
+            ">
+                <span class="elevator-id">ELV-128</span>
+                <span class="badge critical" style="margin-left: 10px;">Crítico</span>
+            </div>
+            
+            <div class="elevator-building">
+                <h3>Hospital Gama</h3>
+                <p class="elevator-location">Ala Sul - Piso 5</p>
+            </div>
+            
+            <div class="elevator-details">
+                <div class="detail-row">
+                    <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" style="width: 20px; height: 20px; vertical-align: middle;">
+                        <circle cx="12" cy="12" r="10" />
+                        <polyline points="12 6 12 12 16 14" />
+                    </svg>
+                    <span style="margin-left: 5px; vertical-align: middle;">há 120 dias</span>
+                </div>
+                
+                <div class="detail-row">
+                    <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" style="width: 20px; height: 20px; vertical-align: middle;">
+                        <circle cx="12" cy="12" r="10" />
+                        <line x1="12" y1="8" x2="12" y2="12" />
+                        <line x1="12" y1="16" x2="12.01" y2="16" />
+                    </svg>
+                    <span style="margin-left: 5px; vertical-align: middle;">Ação imediata requerida</span>
+                </div>
+            </div>
+            </div>
+
+        <div class="elevator-right-column" style="
+            display: flex; 
+            flex-direction: column; 
+            align-items: flex-end; 
+            padding-left: 20px;
+        ">
+            <div class="elevator-score" style="margin-bottom: 10px;">
+                <span class="score-value"></span>
+                <p class="score-label" style="text-align: right;">Score de Saúde</p>
+                <div class="progress-bar">
+                    <div class="progress-fill critical" style="width: 45%; height: 8px; border-radius: 4px; background-color: #dc3545;"></div>
+                </div>
+            </div>
+
+            <a href="#" class="action-btn" style="
+                background-color: #cf7f7f; /* Cor Vermelha para Crítico */
+                color: #333333; /* Cor da Fonte Branca para contraste */
+                padding: 8px 10px; 
+                border-radius: 5px; 
+                text-decoration: none;
+                font-weight: bold;
+                display: inline-block;
+                font-size: 12px; 
+                margin-top: 60px; /* Espaçamento ajustado */
+            ">
+                GERAR NOTIFICAÇÃO
+            </a>
+        </div>
+        
+    </div>
+</div>
 
                     <div class="elevator-card">
                         <div class="elevator-content">
