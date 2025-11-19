@@ -1,12 +1,107 @@
-<!DOCTYPE html>
-<html lang="pt-BR">
-<head>
-    <meta charset="UTF-8">
-    <title>Página Sobre</title>
-</head>
-<body>
-    <h1>Página Sobre</h1>
-    <p>Aqui você pode colocar informações sobre o site.</p>
-    /Voltar para Home</a>
-</body>
-</html>
+import Header from "@/components/Header";
+import StatCard from "@/components/StatCard";
+import ElevatorCard from "@/components/ElevatorCard";
+import PredictiveAnalysis from "@/components/PredictiveAnalysis";
+import { Activity, AlertTriangle, TrendingUp, Wrench } from "lucide-react";
+
+const Index = () => {
+  const elevators = [
+    {
+      id: "ELV-001",
+      status: "optimal" as const,
+      building: "Edifício Comercial Alpha",
+      location: "Torre A - Piso 12",
+      lastInspection: "há 15 dias",
+      additionalInfo: "Inspeção em 45 dias",
+      healthScore: 92,
+    },
+    {
+      id: "ELV-042",
+      status: "warning" as const,
+      building: "Shopping Center Beta",
+      location: "Bloco B - Setor 3",
+      lastInspection: "há 62 dias",
+      additionalInfo: "Modernização recomendada",
+      healthScore: 68,
+    },
+    {
+      id: "ELV-128",
+      status: "critical" as const,
+      building: "Hospital Gama",
+      location: "Ala Sul - Piso 5",
+      lastInspection: "há 120 dias",
+      additionalInfo: "Ação imediata requerida",
+      healthScore: 45,
+    },
+    {
+      id: "ELV-089",
+      status: "optimal" as const,
+      building: "Residencial Delta",
+      location: "Torre C - Apartamentos",
+      lastInspection: "há 30 dias",
+      additionalInfo: "Monitoramento contínuo",
+      healthScore: 85,
+    },
+  ];
+
+  return (
+    <div className="min-h-screen bg-background">
+      <Header />
+      
+      <main className="container mx-auto p-6 space-y-6">
+        <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
+          <StatCard
+            title="Elevadores Monitorados"
+            value="247"
+            subtitle="+12 novos este mês"
+            icon={<Activity className="h-6 w-6 text-primary" />}
+            iconBg="bg-primary/10"
+          />
+          <StatCard
+            title="Alertas Ativos"
+            value="23"
+            subtitle="8 críticos, 15 médios"
+            icon={<AlertTriangle className="h-6 w-6 text-warning" />}
+            iconBg="bg-warning/10"
+          />
+          <StatCard
+            title="Score Médio de Saúde"
+            value="87%"
+            subtitle="+3% vs mês anterior"
+            icon={<TrendingUp className="h-6 w-6 text-success" />}
+            iconBg="bg-success/10"
+          />
+          <StatCard
+            title="Modernizações Planejadas"
+            value="45"
+            subtitle="R$ 2.3M orçado"
+            icon={<Wrench className="h-6 w-6 text-accent" />}
+            iconBg="bg-accent/10"
+          />
+        </div>
+
+        <div className="grid gap-6 lg:grid-cols-3">
+          <div className="lg:col-span-2 space-y-4">
+            <div className="flex items-center gap-2">
+              <h2 className="text-2xl font-bold text-foreground">Elevadores Monitorados</h2>
+            </div>
+            <div className="space-y-4">
+              {elevators.map((elevator) => (
+                <ElevatorCard key={elevator.id} {...elevator} />
+              ))}
+            </div>
+          </div>
+
+          <div className="space-y-4">
+            <div className="flex items-center gap-2">
+              <h2 className="text-2xl font-bold text-foreground">Análise Preditiva</h2>
+            </div>
+            <PredictiveAnalysis />
+          </div>
+        </div>
+      </main>
+    </div>
+  );
+};
+
+export default Index;
