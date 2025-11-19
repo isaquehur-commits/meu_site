@@ -3,7 +3,7 @@ from flask import Flask, render_template
 app = Flask(__name__)
 
 # Agora a rota principal (/) vai para sobre.html
-@app.route('/')
+@app.route('/sobre')
 def sobre():
     return render_template('sobre.html')
 
