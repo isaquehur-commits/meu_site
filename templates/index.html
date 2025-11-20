@@ -314,7 +314,6 @@
     </div>
     
     <script>
-        console.log("JSON recebido:", {{ components_json | safe }});
         const components = {{ components_json | safe }};
         const statusColors = {"compliant":"#10b981","attention":"#f59e0b","obsolete":"#ef4444"};
         const statusLabels = {"compliant":"Conforme","attention":"Atenção","obsolete":"Obsoleto"};
