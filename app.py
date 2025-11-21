@@ -1,6 +1,7 @@
 from flask import Flask, render_template
 import pandas as pd
 import json
+from pathlib import Path
 
 app = Flask(__name__)
 
@@ -56,6 +57,29 @@ def shopping_center_beta():
     elv_data_json = json.dumps(registros, ensure_ascii=False)
 
     return render_template("shopping_center_beta.html", elv_data_json=elv_data_json)
+
+    # --- Nova página hospital Gama ---
+@app.route('/hospital-gama')
+def hospital_gama():
+
+ # Lê o Excel
+    df = pd.read_excel("data/banco.xlsx", sheet_name="ELV-128")
+
+# Converte a coluna de data (installationDate) para datetime
+    # e força o formato ISO (YYYY-MM-DD) para o JavaScript
+    if 'installationDate' in df.columns:
+        df['installationDate'] = pd.to_datetime(
+            df['installationDate'],
+            errors='coerce'
+        ).dt.strftime('%Y-%m-%d')
+
+# Converte o DataFrame em uma lista de dicionários
+    registros = df.to_dict(orient="records")
+
+# Converte para JSON e envia ao HTML
+    elv_data_json = json.dumps(registros, ensure_ascii=False)
+
+    return render_template("hospital_gama.html", elv_data_json=elv_data_json)
 
 # --- Execução local ---
 if __name__ == '__main__':
