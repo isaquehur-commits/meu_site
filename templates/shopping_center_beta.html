@@ -281,7 +281,7 @@
         <div style="text-align: center; margin-top: 20px;">
       <a href="/">
         <button style="padding: 10px 20px; font-size: 16px; cursor: pointer;">
-            Pagina Inicial</button>
+            Retornar ao Dashboard</button>
     </a>
 </div>
         <div class="filters">
@@ -314,7 +314,7 @@
     </div>
     
     <script>
-        const components = {{ components_json | safe }};
+        const components = {{ elv_data_json | safe }};
         const statusColors = {"compliant":"#10b981","attention":"#f59e0b","obsolete":"#ef4444"};
         const statusLabels = {"compliant":"Conforme","attention":"Atenção","obsolete":"Obsoleto"};
         const categoryLabels = {"mechanical":"Mecânico","electrical":"Elétrico","electronic":"Eletrônico"};

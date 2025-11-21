@@ -37,9 +37,25 @@ def index():
 # --- Nova página Shopping Center Beta ---
 @app.route('/shopping-center-beta')
 def shopping_center_beta():
-    return render_template("shopping_center_beta.html")
 
+ # Lê o Excel
+    df = pd.read_excel("data/banco.xlsx", sheet_name="ELV-042")
 
+# Converte a coluna de data (installationDate) para datetime
+    # e força o formato ISO (YYYY-MM-DD) para o JavaScript
+    if 'installationDate' in df.columns:
+        df['installationDate'] = pd.to_datetime(
+            df['installationDate'],
+            errors='coerce'
+        ).dt.strftime('%Y-%m-%d')
+
+# Converte o DataFrame em uma lista de dicionários
+    registros = df.to_dict(orient="records")
+
+# Converte para JSON e envia ao HTML
+    elv_data_json = json.dumps(registros, ensure_ascii=False)
+
+    return render_template("shopping_center_beta.html", elv_data_json=elv_data_json)
 
 # --- Execução local ---
 if __name__ == '__main__':
