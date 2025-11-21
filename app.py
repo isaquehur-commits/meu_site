@@ -15,7 +15,7 @@ def sobre():
 @app.route('/index')
 def index():
     # Lê o Excel
-    df = pd.read_excel("data/banco.xlsx")
+    df = pd.read_excel("data/banco.xlsx", sheet_name="ELV-001")
 
     # Converte a coluna de data (installationDate) para datetime
     # e força o formato ISO (YYYY-MM-DD) para o JavaScript
@@ -86,7 +86,7 @@ def hospital_gama():
 def residencial_delta():
 
  # Lê o Excel
-    df = pd.read_excel("data/banco.xlsx", sheet_name="ELV-89")
+    df = pd.read_excel("data/banco.xlsx", sheet_name="ELV-089")
    
     
 # Converte a coluna de data (installationDate) para datetime
