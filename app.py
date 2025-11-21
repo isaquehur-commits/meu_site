@@ -81,6 +81,30 @@ def hospital_gama():
 
     return render_template("hospital_gama.html", elv_data_json=elv_data_json)
 
+     # --- Nova página Residencial Delta ---
+@app.route('/residencial-delta')
+def residencial_delta():
+
+ # Lê o Excel
+    df = pd.read_excel("data/banco.xlsx", sheet_name="ELV-89")
+   
+    
+# Converte a coluna de data (installationDate) para datetime
+    # e força o formato ISO (YYYY-MM-DD) para o JavaScript
+    if 'installationDate' in df.columns:
+        df['installationDate'] = pd.to_datetime(
+            df['installationDate'],
+            errors='coerce'
+        ).dt.strftime('%Y-%m-%d')
+
+# Converte o DataFrame em uma lista de dicionários
+    registros = df.to_dict(orient="records")
+
+# Converte para JSON e envia ao HTML
+    elv_data_json = json.dumps(registros, ensure_ascii=False)
+
+    return render_template("residencial_delta.html", elv_data_json=elv_data_json)
+
 # --- Execução local ---
 if __name__ == '__main__':
     app.run(host='127.0.0.1', port=5000, debug=True)
