@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ElevatorAI Manager - Dashboard</title>
+    <title>MAI Manager - Dashboard</title>
     <style>
         * {
             margin: 0;
@@ -509,7 +509,7 @@
 <body>
     <header class="header">
         <div class="header-content">
-            <div class="header-left">
+            <div class="header-left">                                 
                 <div class="logo-section">
                     <div class="logo-icon">
                     <img src="{{ url_for('static', filename='images/logo.png') }}"
@@ -520,9 +520,7 @@
                         <h1>Gerenciamento de Obsolescência Schindler</h1>
                         <p><strong>Gestão Visual</strong></p>
                     </div>
-                </div>
-                <nav class="nav">
-                    
+                </div>                              
                    
                 </nav>
             </div>
@@ -610,7 +608,7 @@
                             <div class="elevator-info">
                                 <div class="elevator-header">
                                     <span class="elevator-id">ELV-001</span>
-                                    <span class="badge optimal">Ótimo</span>
+                                    <span class="badge critical" style="margin-left: 03px;">Crítico</span>
                                 </div>
                                 <div class="elevator-building">
                                     <a href="/index" style="text-decoration: none; color: inherit;"> 
@@ -637,15 +635,38 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="elevator-score">
-                                <span class="score-value"></span>
-                                <p class="score-label">Score de Saúde</p>
-                                <div class="progress-bar">
-                                    <div class="progress-fill optimal" style="width: 92%"></div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                             <div class="elevator-right-column" style="
+            display: flex; 
+            flex-direction: column; 
+            align-items: flex-end; 
+            padding-left: 20px;
+        ">
+            <div class="elevator-score" style="margin-bottom: 10px;">
+                <span class="score-value"></span>
+                <p class="score-label" style="text-align: right;">Score de Saúde</p>
+                <div class="progress-bar">
+                    <div class="progress-fill critical" style="width: 45%; height: 8px; border-radius: 4px; background-color: #dc3545;"></div>
+                </div>
+            </div>
+
+            <a href="/static/notificacao.docx"
+                download="Notificacao.docx"
+                class="action-btn" style=" 
+                background-color: #cf7f7f; 
+                color: #333333; 
+                padding: 8px 10px; 
+                border-radius: 5px; 
+                text-decoration: none;
+                font-weight: bold;
+                display: inline-block;
+                margin-top: 60px; /* Espaço entre o Score e o Botão */
+                font-size: 12px;
+            ">
+                GERAR NOTIFICAÇÃO
+            </a>
+        </div>        
+    </div>
+</div>
 
                     <div class="elevator-card">
     <div class="elevator-content" style="
