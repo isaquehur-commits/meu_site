@@ -354,15 +354,40 @@
     grid.style.display = 'grid';
     noResults.style.display = 'none';
     
-    grid.innerHTML = filteredComponents.map(comp => `
-        <div class="component-card">
-            <div class="component-header">
-                <div>
-                    <div class="component-title">${comp.name}</div>
-                    <div style="font-size: 13px; color: #6b7280;">
-                        ${categoryLabels[comp.category]}
-                    </div>
+   grid.innerHTML = filteredComponents.map(comp => `
+    <div class="component-card" style="position: relative;">
+        <div class="component-header">
+            <div>
+                <div class="component-title">${comp.name}</div>
+                <div style="font-size: 13px; color: #6b7280;">
+                    ${categoryLabels[comp.category]}
                 </div>
+            </div>
+ <!-- Botão com ícone da câmera no topo direito -->
+  <button class="camera-btn" onclick="openImageModal('${comp.imageUrl}')" style="
+      position:absolute;
+      top: 16px;
+      right: 0px;
+      background:none;
+      border:none;
+      cursor:pointer;
+      padding:4px;
+  " title="Ver imagem">
+    
+
+<svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="#555">
+  <!-- Corpo da câmera -->
+  <rect x="2" y="6" width="20" height="14" rx="3" ry="3"/>
+  <!-- Flash no topo -->
+  <rect x="7" y="3" width="10" height="3" rx="1" ry="1"/>
+  <!-- Lente externa -->
+  <circle cx="12" cy="13" r="5" fill="#333"/>
+  <!-- Lente interna -->
+  <circle cx="12" cy="13" r="2.5" fill="#777"/>
+  <!-- Detalhe do reflexo -->
+  <circle cx="13.5" cy="11.5" r="0.8" fill="#fff"/>
+</svg>
+  </button>
 
                 <div class="status-badge">
                     ${createStatusLabel(comp.obsolescenceStatus)}
