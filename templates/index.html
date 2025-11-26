@@ -11,6 +11,61 @@
             box-sizing: border-box;
         }
         
+        /* 🚨 FIX: Garante que a modal esteja oculta por padrão (especificidade alta) */
+        #globalImageModal:not([open]) {
+            display: none !important;
+        }
+
+        /* Estilo para garantir que o fundo escuro da modal cubra a tela */
+        #globalImageModal::backdrop {
+            background: rgba(0, 0, 0, 0.75);
+        }
+    
+        /* Estilo principal para centralizar a modal */
+        #globalImageModal {
+            /* Garante que ele ignore margens estranhas e centralize automaticamente */
+            margin: auto; 
+            
+            /* Remove a borda e padding padrão */
+            border: none; 
+            padding: 0; 
+            background: transparent; 
+            
+            /* Limita o tamanho máximo para que caiba em qualquer tela */
+            max-width: 90vw; /* 90% da largura da viewport */
+            max-height: 90vh; /* 90% da altura da viewport */
+            
+            /* Garante que o conteúdo (a imagem) se adapte */
+            display: block; 
+            
+            /* 🚨 NOVO: Permite que elementos posicionados absolutamente na modal (como o botão 'X') fiquem visíveis */
+            overflow: visible; 
+        }
+
+        /* 🚨 NOVO: Estiliza o container da imagem para dar a ela a aparência de caixa */
+        #modalImageContainer {
+            position: relative;
+            max-width: 100%;
+            max-height: 100%;
+            border-radius: 8px; /* Cantos arredondados */
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5); /* Efeito de sombra */
+            /* A imagem vai preencher este container */
+            display: inline-block; 
+        }
+
+        /* 🚨 NOVO: Estilos do botão de fechar, agora dentro da tag <dialog> */
+        #modalCloseButton {
+            /* Posicionamento absoluto em relação à <dialog> (ou o container mais próximo com position relative/absolute, etc.) */
+            position: absolute;
+            top: 0px; 
+            right: 0px; 
+            
+            /* Ajuste o z-index para garantir que fique acima de tudo */
+            z-index: 100;
+        }
+
+
+        /* --- Estilos da Aplicação --- */
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
@@ -313,6 +368,50 @@
         </div>
     </div>
     
+    <!-- ELEMENTO MODAL: Corrigido o posicionamento do botão 'X' -->
+    <dialog 
+        id="globalImageModal" 
+        oncancel="this.close()"
+        hidden
+    >   
+        <!-- 🚨 NOVO CONTAINER: Agora com id para estilização no <head> -->
+        <div id="modalImageContainer">
+            <!-- Onde a imagem será carregada pelo JavaScript -->
+            <img 
+                id="modalImageDisplay"
+                src="" 
+                alt="Imagem Detalhada do Componente" 
+                style="
+                    display: block;
+                    max-width: 100%;
+                    max-height: 100%;
+                    border-radius: 8px; /* Cantos arredondados, mas sem sombra ou borda */
+                "
+            >
+        </div>
+        
+        <button 
+            id="modalCloseButton"
+            onclick="document.getElementById('globalImageModal').close()" 
+            style="
+                /* Estilo do botão X */
+                background: white;
+                color: #333;
+                border: 1px solid #333;
+                border-radius: 50%; 
+                width: 30px;
+                height: 30px;
+                cursor: pointer;
+                font-size: 14px;
+                font-weight: bold;
+                line-height: 1; 
+                /* Ajuste o posicionamento para ficar no canto da imagem, mesmo que ela varie de tamanho */
+                transform: translate(15px, -30px); /* Move para cima e para a direita fora da caixa */
+            "
+        >
+            X
+        </button>
+    </dialog>
     <script>
         const components = {{ components_json | safe }};
         const statusColors = {"compliant":"#10b981","attention":"#f59e0b","obsolete":"#ef4444"};
@@ -355,39 +454,33 @@
     noResults.style.display = 'none';
     
     grid.innerHTML = filteredComponents.map(comp => `
-    <div class="component-card" style="position: relative;">
-        <div class="component-header">
-            <div>
-                <div class="component-title">${comp.name}</div>
-                <div style="font-size: 13px; color: #6b7280;">
-                    ${categoryLabels[comp.category]}
-                </div>
-            </div>
- <!-- Botão com ícone da câmera no topo direito -->
-  <button class="camera-btn" onclick="openImageModal('${comp.imageUrl}')" style="
-      position:absolute;
-      top: 16px;
-      right: 0px;
-      background:none;
-      border:none;
-      cursor:pointer;
-      padding:4px;
-  " title="Ver imagem">
-    
+  <div class="component-card" style="position: relative;">
+                <div class="component-header">
+                    <div>
+                        <div class="component-title">${comp.name}</div>
+                        <div style="font-size: 13px; color: #6b7280;">
+                            ${categoryLabels[comp.category]}
+                        </div>
+                    </div>
 
-<svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="#555">
-  <!-- Corpo da câmera -->
-  <rect x="2" y="6" width="20" height="14" rx="3" ry="3"/>
-  <!-- Flash no topo -->
-  <rect x="7" y="3" width="10" height="3" rx="1" ry="1"/>
-  <!-- Lente externa -->
-  <circle cx="12" cy="13" r="5" fill="#333"/>
-  <!-- Lente interna -->
-  <circle cx="12" cy="13" r="2.5" fill="#777"/>
-  <!-- Detalhe do reflexo -->
-  <circle cx="13.5" cy="11.5" r="0.8" fill="#fff"/>
-</svg>
-  </button>
+                    <button class="camera-btn" onclick="openImageModal('${comp.imageUrl}')" style="
+                        position:absolute;
+                        top: 16px;
+                        right: 0px;
+                        background:none;
+                        border:none;
+                        cursor:pointer;
+                        padding:4px;
+                    " title="Ver imagem">
+                        
+                        <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="#555">
+                            <rect x="2" y="6" width="20" height="14" rx="3" ry="3"/>
+                            <rect x="7" y="3" width="10" height="3" rx="1" ry="1"/>
+                            <circle cx="12" cy="13" r="5" fill="#333"/>
+                            <circle cx="12" cy="13" r="2.5" fill="#777"/>
+                            <circle cx="13.5" cy="11.5" r="0.8" fill="#fff"/>
+                        </svg>
+                    </button>
 
                 <div class="status-badge">
                     ${createStatusLabel(comp.obsolescenceStatus)}
@@ -446,10 +539,26 @@
         document.getElementById('statusFilter').addEventListener('change', filterComponents);
         
         renderComponents(components);
+
+        /**
+     * Função JavaScript para abrir a modal e exibir a imagem correta.
+     * @param {string} imageUrl - https://http2.mlstatic.com/D_711577-MLB91313470010_092025-C.jpg
+     */
+    function openImageModal(imageUrl) {
+        // 1. Encontra o elemento <img> dentro da modal pelo seu ID
+        const imageDisplay = document.getElementById('modalImageDisplay');
+        
+        // 2. Define o atributo 'src' do elemento <img> com o URL da foto
+        imageDisplay.src = imageUrl;
+
+        // 3. Encontra o elemento <dialog>
+        const modal = document.getElementById('globalImageModal');
+        
+        // 4. Abre a modal (o método showModal() exibe a caixa e o backdrop)
+        if (modal) {
+            modal.showModal();
+        }
+    }
     </script>
-
-
-</script>
-
-    </body>
-    </html>
+</body>
+</html>
