@@ -44,7 +44,7 @@
         .header-content {
             display: flex;
             align-items: center;
-            justify-content: space-between;
+            justify-content: center; 
             max-width: 1400px;
             margin: 0 auto;
         }
@@ -55,26 +55,19 @@
             gap: 2rem;
         }
 
+        /* ------------------------------------------- */
+        /* MODIFICAÇÃO PARA O ESPAÇAMENTO DA LOGO: */
+        /* ------------------------------------------- */
         .logo-section {
             display: flex;
             align-items: center;
-            gap: 0.75rem;
+            /* **Aumentado o espaçamento entre a logo e o texto** */
+            gap: 2rem; 
         }
+        /* ------------------------------------------- */
 
         .logo-icon {
-            width: 3rem;
-            height: 3rem;
-            background-color: var(--primary);
-            border-radius: 0.75rem;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .logo-icon svg {
-            width: 1.75rem;
-            height: 1.75rem;
-            color: var(--primary-foreground);
+            /* Mantido o logo icon */
         }
 
         .logo-text h1 {
@@ -515,16 +508,12 @@
                     <img src="{{ url_for('static', filename='images/logo.png') }}"
                     alt="Logo da Empresa" style="width: 115px; height: 64px;">
                     </div>
-                    <div class="logo-text" style="margin-left: 45px;">
                     <div class="logo-text"> 
                         <h1>Gerenciamento de Obsolescência Schindler</h1>
                         <p><strong>Gestão Visual</strong></p>
-                    </div>
-                </div>                              
-                   
-                </nav>
+                    </div>                             
+                </div>
             </div>
-            
         </div>
     </header>
 
@@ -803,7 +792,7 @@
 
             <a href="/static/notificacao.docx"
                 download="Notificacao.docx"
-                class="action-btn" style=" 
+                class="action-btn" style="
                 background-color: #cf7f7f;
                 color: #333333; 
                 padding: 8px 10px; 
