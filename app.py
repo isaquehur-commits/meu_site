@@ -29,7 +29,7 @@ def index():
             errors='coerce'
         ).dt.strftime('%Y-%m-%d')
 
-    # Converte o DataFrame em uma lista de dicionários
+    # Converte o DataFradme em uma lista de dicionários
     registros = df.to_dict(orient="records")
 
     # Converte para JSON e envia ao HTML
